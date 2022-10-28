@@ -7,4 +7,13 @@ import lombok.Data;
 public class VoteDto extends Vote {
     private Integer cnt;
     private String channelName;
+
+
+    @Override
+    public String toString() {
+        return "VoteDto{" +
+                "cnt=" + cnt +
+                ", channelName='" + channelName + '\'' +
+                "} " + super.toString();
+    }
 }
