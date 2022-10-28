@@ -32,9 +32,11 @@ public class VoteController {
     @Autowired
     private VoteChannelService voteChannelService;
 
-    @GetMapping("/list")
-    public R<List<VoteDto>> list(){
-        List<Vote> list = voteService.list();
+    @GetMapping("/list/{channelId}")
+    public R<List<VoteDto>> list(@PathVariable Integer channelId){
+        LambdaQueryWrapper<Vote> wrapper1 = new LambdaQueryWrapper<>();
+        wrapper1.eq(Vote::getChannelId,channelId);
+        List<Vote> list = voteService.list(wrapper1);
         List<VoteDto> voteDtos = list.stream().map((item) -> {
             VoteDto voteDto = new VoteDto();
             int count = 0;
