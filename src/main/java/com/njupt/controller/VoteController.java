@@ -72,8 +72,16 @@ public class VoteController {
         List<VoteDto> voteDtos = list.stream().map((item) -> {
             VoteDto voteDto = new VoteDto();
             VoteChannel channel = voteChannelService.getById(item.getChannelId());
+            int count = 0;
+            LambdaQueryWrapper<VoteOption> wrapper1 = new LambdaQueryWrapper<>();
+            wrapper1.eq(VoteOption::getVoteId, item.getId());
+            List<VoteOption> options = voteOptionService.list(wrapper1);
+            for (VoteOption option : options) {
+                count += option.getCnt();
+            }
             BeanUtils.copyProperties(item, voteDto);
             voteDto.setChannelName(channel.getName());
+            voteDto.setCnt(count);
             return voteDto;
         }).collect(Collectors.toList());
         return R.success(voteDtos);
