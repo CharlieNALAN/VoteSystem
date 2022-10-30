@@ -119,4 +119,10 @@ public class VoteController {
 //        vote = voteService.getOne(wrapper1);
         return R.success(vote.getId().toString());
     }
+
+    @GetMapping("/delete/{id}")
+    public R<String> delete(@PathVariable Integer id){
+        voteService.removeById(id);
+        return R.success("success");
+    }
 }
