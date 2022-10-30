@@ -48,11 +48,17 @@ public class UserVoteCntroller {
         LambdaQueryWrapper<UserVote> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(UserVote::getUserName,user);
         List<UserVote> userVotes = userVoteService.list(wrapper);
-//        ArrayList<Vote> votes = new ArrayList<>();
-        List<Vote> votes = userVotes.stream().map((item)->{
-            Integer voteId = item.getVoteId();
-            return voteService.getById(voteId);
-        }).collect(Collectors.toList());
+        ArrayList<Vote> votes = new ArrayList<>();
+//        List<Vote> votes = userVotes.stream().map((item)->{
+//            Integer voteId = item.getVoteId();
+//            return voteService.getById(voteId);
+//        }).collect(Collectors.toList());
+        for (UserVote userVote : userVotes) {
+            Vote vote = voteService.getById(userVote.getVoteId());
+            if(vote != null){
+                votes.add(vote);
+            }
+        }
         return R.success(votes);
     }
 

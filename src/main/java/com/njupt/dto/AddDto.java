@@ -12,4 +12,6 @@ public class AddDto {
     private String voteName;
     private String selectChannel;
     private String desc;
+    private String action;
+    private String value;
 }

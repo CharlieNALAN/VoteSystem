@@ -3,6 +3,7 @@ package com.njupt.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.njupt.common.R;
+import com.njupt.dto.AddDto;
 import com.njupt.dto.ChannelDto;
 import com.njupt.entity.User;
 import com.njupt.entity.Vote;
@@ -74,5 +75,15 @@ public class VoteChannelController {
         wrapper.eq(VoteChannel::getCreateName,username);
         List<VoteChannel> list = voteChannelService.list(wrapper);
         return R.success(list);
+    }
+
+    @PostMapping("/add")
+    public R<String> addChannel(HttpSession session, @RequestBody AddDto addDto){
+        VoteChannel channel = new VoteChannel();
+        String user = (String) session.getAttribute("user");
+        channel.setCreateName(user);
+        channel.setName(addDto.getValue());
+        voteChannelService.save(channel);
+        return R.success("success");
     }
 }
