@@ -100,4 +100,10 @@ public class UserController {
         return R.success(userDto);
     }
 
+    @GetMapping("/logout")
+    public R<String> logOut(HttpSession session){
+        session.removeAttribute("user");
+        return R.success("success");
+    }
+
 }
